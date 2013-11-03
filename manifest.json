@@ -1,8 +1,8 @@
 {
-  "name": "Amazoptions : See all the prices at once",
+  "name": "Amazoptions",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "",
+  "description": "See all the prices at once.",
   "homepage_url": "https://github.com/nathanleiby/amazoptions",
   "icons": {
     "16": "icons/icon16.png",
