@@ -69,6 +69,9 @@ chrome.extension.sendMessage({}, function(response) {
 			// Write some tests
 			console.log('js!');
 
+			var outputDiv = $('#price_feature_div');
+			outputDiv.html("<table border=\"1\"><tr><td>yo</td></table>")
+
 		}
 	}, 10);
 });

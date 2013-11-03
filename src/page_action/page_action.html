@@ -11,8 +11,20 @@
 	}
 </style>
 
+<?
+chrome.tabs.query({active:true,currentWindow:true},funciton(tabs){
+  chrome.tabs.sendMessage(tabs[0].id,{message:"text"}, function(response){
+    //If you need a response, do stuff with it here
+    console.log("got response!")
+    console.log(response);
+  });
+});
+?>
+
 <div id="mainPopup">
 <h1>Amazoptions</h1>
+<div id="amazoptionsResults">
+</div>
 <table>
     <tr>
         <th>Item</th>
