@@ -1,3 +1,12 @@
+var testItems = [{
+    'url': 'amazon.whoa/123315asda',
+    'swatches' : [
+        {'type' : 'dropdown', 'quantity' : 5},
+        {'type' : 'table', 'quantity' : 4},
+        {'type' : 'ul', 'quantity' : 3},
+    ]
+}];
+
 function detect() {
     console.log("----Table that has list of options----")
     var tableList = $('table.variations .swatchOuter')
@@ -49,3 +58,5 @@ function allowsPrimeShipping() {
 function clickThing() {
     // click stuff and see price update before your very eyes!
 }
+
+// Write some tests
