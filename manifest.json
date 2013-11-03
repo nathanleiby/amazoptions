@@ -40,7 +40,9 @@
 
       ],
       "js": [
-        "src/inject/inject.js"
+        "src/inject/inject.js",
+        "js/jquery/jquery.js"
+
       ]
     }
   ]
