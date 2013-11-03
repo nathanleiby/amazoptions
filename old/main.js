@@ -60,3 +60,4 @@ function clickThing() {
 }
 
 // Write some tests
+console.log('js!');
