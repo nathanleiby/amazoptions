@@ -14,7 +14,24 @@
     "page": "src/bg/background.html",
     "persistent": true
   },
+  "options_page": "src/options/index.html",
+  "page_action": {
+    "default_icon": "icons/icon19.png",
+    "default_title": "page action demo",
+    "default_popup": "src/page_action/page_action.html"
+  },
+  "permissions": [
+    "http://www.amazon.com/*/dp/*/*"
+  ],
   "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/*"
+      ],
+      "css": [
+        "src/inject/inject.css"
+      ]
+    },
     {
       "matches": [
         "https://www.google.com/*"
