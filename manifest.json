@@ -21,7 +21,9 @@
     "default_popup": "src/page_action/page_action.html"
   },
   "permissions": [
-    "tabs"
+    "tabs",
+    "http://www.amazon.com/*/dp/*/*",
+    "http://www.amazon.com/*/product/*"
   ],
   "content_scripts": [
     {
@@ -37,12 +39,10 @@
       "matches": [
         "http://www.amazon.com/*/dp/*/*",
         "http://www.amazon.com/*/product/*"
-
       ],
       "js": [
-        "src/inject/inject.js",
-        "js/jquery/jquery.js"
-
+        "js/jquery/jquery.js",
+        "src/inject/inject.js"
       ]
     }
   ]

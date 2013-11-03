@@ -5,8 +5,6 @@ amazoptions
 
 Amazon Chrome Extension - Project "Optimal Pants Selection"
 
-Created with the awesome [extensionizr](http://extensionizr.com).
-
 Test Set:
 
 - http://www.amazon.com/iBeats-Headphones-ControlTalk-From-Monster%C2%AE/dp/B004477OB8/ref=pd_sim_e_3
@@ -48,3 +46,9 @@ selectDropdown.first().val(lastChildVal).change()
 // ss.selectedOptions
 // ss.selectedIndex
 ```
+
+## Acknowledgements
+
+Created with the awesome [extensionizr](http://extensionizr.com).
+
+CSS from: http://coding.smashingmagazine.com/2008/08/13/top-10-css-table-designs

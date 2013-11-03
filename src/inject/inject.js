@@ -93,7 +93,7 @@ chrome.extension.sendMessage({}, function(response) {
 				console.log("Category: ", detectedCategories[i], "Has options: ", optionNames);
 			}
 			var outputDiv = $('#price_feature_div');
-			outputDiv.html("<table border=\"1\"><tr><td>yo</td></table>")
+			outputDiv.html("<table id=\"hor-minimalist-a\">  <tr><th>Name</th><th>Price</th></tr> <tr><td>name1</td><td>$10.50</td></tr>  <tr><td>name2</td><td>$11.50</td></tr>  </table>")
 
 		}
 	}, 10);
