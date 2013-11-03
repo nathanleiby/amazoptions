@@ -21,12 +21,15 @@
     "default_popup": "src/page_action/page_action.html"
   },
   "permissions": [
-    "http://www.amazon.com/*/dp/*/*"
+    "http://www.amazon.com",
+    "tabs"
+
   ],
   "content_scripts": [
     {
       "matches": [
-        "http://www.amazon.com/*/dp/*/*"
+        "http://www.amazon.com/*/dp/*/*",
+        "http://www.amazon.com/*/product/*"
       ],
       "css": [
         "src/inject/inject.css"
@@ -34,7 +37,9 @@
     },
     {
       "matches": [
-        "http://www.amazon.com/*/dp/*/*"
+        "http://www.amazon.com/*/dp/*/*",
+        "http://www.amazon.com/*/product/*"
+
       ],
       "js": [
         "src/inject/inject.js"
