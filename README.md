@@ -5,6 +5,7 @@ amazoptions
 
 Amazon Chrome Extension - Project "Optimal Pants Selection"
 
+Created with the awesome [extensionizr](http://extensionizr.com).
 
 Test Set:
 
