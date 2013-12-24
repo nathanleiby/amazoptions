@@ -13,6 +13,7 @@ chrome.extension.sendMessage({}, function(response) {
 					{'type' : 'ul', 'quantity' : 3},
 				]
 			}];
+			// TODO: save example HTML to test / debug against
 
 			function detect() {
 				console.log("----Table that has list of options----");
@@ -36,10 +37,8 @@ chrome.extension.sendMessage({}, function(response) {
 				for (var i=0; i < selectDropdown.length; i++) {
 					console.log("Dropdown #", i+1, "has", selectDropdown[i].children.length, "elements.");
 					output.push(selectDropdown[i]);
-
 				}
-				return output
-				
+				return output;
 			}
 
 			function getPrice() {
@@ -78,12 +77,20 @@ chrome.extension.sendMessage({}, function(response) {
 					optionNames.push(category.children[i].text);
 					optionNames.push(category.children[i].title);
 				}
-				return optionNames
+				return optionNames;
 			}
 
 			function clickThing() {
 				// click stuff and see price update before your very eyes!
 			}
+
+			// Main functionality
+			// <div>
+			// 	<input type="button">
+			// 	<div id="amazoptions_holder">
+
+			// 	</div>
+			// </div>
 
 			// Write some tests
 			var detectedCategories=detect();
@@ -93,8 +100,29 @@ chrome.extension.sendMessage({}, function(response) {
 				console.log("Category: ", detectedCategories[i], "Has options: ", optionNames);
 			}
 			var outputDiv = $('#price_feature_div');
-			outputDiv.html("<table id=\"hor-minimalist-a\">  <tr><th>Name</th><th>Price</th></tr> <tr><td>name1</td><td>$10.50</td></tr>  <tr><td>name2</td><td>$11.50</td></tr>  </table>")
+			var currentHtml = outputDiv.html();
+			var newHtmlArray = [
+			'<div>',
+				'<input type="button" value="YoButton" id="mybutton" />',
+				'<div id="amazoptions_holder">',
+					'<table id=\"hor-minimalist-a\">',
+					'<tr><th>Name</th><th>Price</th></tr>',
+					'<tr><td>name1</td><td>$10.50</td></tr>',
+					'<tr><td>name2</td><td>$11.50</td></tr>',
+					'</table>',
+				'</div>',
+			'</div>'
+			];
+			var newHtml = newHtmlArray.join("");
+			// fetch existing content.
 
+			// append 
+			outputDiv.html(currentHtml + newHtml);
+
+			// Button handler
+			$('#mybutton').click(function() {
+				$('#amazoptions_holder').toggle();
+			});
 		}
 	}, 10);
 });
