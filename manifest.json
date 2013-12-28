@@ -28,17 +28,11 @@
   "content_scripts": [
     {
       "matches": [
-        "http://www.amazon.com/*/dp/*/*",
+        "http://www.amazon.com/*/dp/*",
         "http://www.amazon.com/*/product/*"
       ],
       "css": [
         "src/inject/inject.css"
-      ]
-    },
-    {
-      "matches": [
-        "http://www.amazon.com/*/dp/*/*",
-        "http://www.amazon.com/*/product/*"
       ],
       "js": [
         "js/jquery/jquery.js",
