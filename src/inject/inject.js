@@ -18,7 +18,7 @@ chrome.extension.sendMessage({}, function(response) {
 			function detect() {
 				console.log("----Table that has list of options----");
 				var output=[];
-				
+
 				var tableList = $('table.variations .swatchOuter');
 				for (var i=0; i < tableList.length; i++) {
 					console.log("List #", i+1, "has", tableList[i].children.length, "elements.");
@@ -70,12 +70,11 @@ chrome.extension.sendMessage({}, function(response) {
 
 				return hasImage;
 			}
-			
+
 			function getOptionsFromCategories(category) {
 				var optionNames=[];
 				for (var i=0;i<category.children.length; i++){
-					optionNames.push(category.children[i].text);
-					optionNames.push(category.children[i].title);
+					optionNames.push(category.children[i].text + " " + category.children[i].title);
 				}
 				return optionNames;
 			}
@@ -116,7 +115,7 @@ chrome.extension.sendMessage({}, function(response) {
 			var newHtml = newHtmlArray.join("");
 			// fetch existing content.
 
-			// append 
+			// append
 			outputDiv.html(currentHtml + newHtml);
 
 			// Button handler

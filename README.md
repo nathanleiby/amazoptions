@@ -47,6 +47,18 @@ selectDropdown.first().val(lastChildVal).change()
 // ss.selectedIndex
 ```
 
+Sends a message between between tabs?
+```
+chrome.tabs.query({active:true,currentWindow:true},funciton(tabs){
+  chrome.tabs.sendMessage(tabs[0].id,{message:"text"}, function(response){
+    //If you need a response, do stuff with it here
+    console.log("got response!")
+    console.log(response);
+  });
+});
+```
+
+
 ## Acknowledgements
 
 Created with the awesome [extensionizr](http://extensionizr.com).
