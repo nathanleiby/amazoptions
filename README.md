@@ -1,7 +1,7 @@
 amazoptions
 ===========
 
-![All of the Pants](http://i.imgflip.com/4jxpi.jpg)
+![Travis build status](https://travis-ci.org/nathanleiby/amazoptions.svg?branch=master)
 
 Amazon Chrome Extension - Project "Optimal Pants Selection"
 
