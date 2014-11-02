@@ -22,8 +22,9 @@ var sys = require('sys');
 
 // var priceRegex = "^\d+(.\d{1,2})?";
 
-var getPriceFromLink = function getPriceFromLink(link) {
+var parseLink = function parseLink(link){
   var rawHtml = link;
+  
   var handler = new htmlparser.DefaultHandler(function (error, dom) {
     if (error) {
       console.log("error");
@@ -35,8 +36,14 @@ var getPriceFromLink = function getPriceFromLink(link) {
   });
   var parser = new htmlparser.Parser(handler);
   parser.parseComplete(rawHtml);
-
   var dom = handler.dom;
+  return dom;
+}
+
+
+var getPriceFromLink = function getPriceFromLink(link) {
+  
+  var dom = parseLink(link);
   for (i = 0; i < dom.length; i++) {
     if (dom[i].type == 'text' && dom[i].raw[0] == "$") {
       return dom[i].raw.substr(0,dom[i].raw.length - 5)
@@ -46,6 +53,29 @@ var getPriceFromLink = function getPriceFromLink(link) {
   return "?";
 }
 
-module.exports = {
-  "getPriceFromLink" : getPriceFromLink
+
+var getNameFromLink = function getNameFromLink(link) {
+  var dom = parseLink(link);
+
+  try {
+    if (dom[0].children === undefined){
+      return "?";
+    }
+    else {
+      return dom[0].children[0].data;
+    }
+  }
+
+  catch(e) {
+    console.log('what?', e, dom);
+    return "?";
+  }
 }
+
+module.exports = {
+  "getPriceFromLink" : getPriceFromLink,
+  "getNameFromLink" : getNameFromLink
+
+}
+
+
