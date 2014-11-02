@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha src/test_getpage.js"
+    "test": "./node_modules/mocha/bin/mocha src/test_getpage.js",
+    "build": "node_modules/browserify/bin/cmd.js src/getpage.js > bundle.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "quest": "^0.2.8"
   },
   "devDependencies": {
-    "mocha": "^1.21.5"
+    "mocha": "^1.21.5",
+    "browserify": "^6.2.0"
   }
 }

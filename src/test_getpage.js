@@ -2,8 +2,8 @@
 // 1 <a href="/gp/aw/d/B006Y5UV4A/ref=aw_d_var_pri_pc_g_2_1?p=2&vid=ALL">2</a>
 // <a href="/gp/aw/d/B006Y5UV4A/ref=aw_d_var_pri_pc_n_1?p=2&vid=ALL">Next</a>'
 
-fs = require('fs');
-util = require('util');
+var fs = require('fs');
+var util = require('util');
 
 var list_o_dict_o_links = [
     {
@@ -118,41 +118,44 @@ describe('get page', function(){
     assert.equal(name, '?');
   });
 
-  describe('getItemsFromPage', function(){
-    it('returns the dom for a page', function(){
-      var html = fs.readFileSync('src/product1-p1.html');
-      var dom = getpage.getItemsFromPage(html);
-      assert(dom);
-    });
+  var pages = [
+    {
+      'page':'src/product1-p1.html',
+      'expected_item_count': 10,
+      'is_last_page': false,
+    },
+    {
+      'page':'src/product1-p2.html',
+      'expected_item_count': 5,
+      'is_last_page': true,
+    },
+    {
+      'page':'src/product2-p1.html',
+      'expected_item_count': 10,
+      'is_last_page': true,
+    },
+    {
+      'page':'src/empty.html',
+      'expected_item_count': 0,
+      'is_last_page': true, // n/a
+    }
+  ];
 
-    var pages = [
-      {
-        'page':'src/product1-p1.html',
-        'expected_item_count': 10
-      },
-      {
-        'page':'src/product1-p2.html',
-        'expected_item_count': 5
-      }
-    ];
+  describe('_parsePage', function(){
 
     pages.forEach(function(item) {
+      var html = fs.readFileSync(item['page']);
       it('gets ' + item['expected_item_count'] + ' items from page ' + item['page'], function(){
-        var html = fs.readFileSync('src/product1-p1.html');
-        var items = getpage.getItemsFromPage(html.toString());
-        assert(items.length, item['expected_item_count']);
+        var items = getpage.getItemsFromPage(html);
+        assert.equal(items.length, item['expected_item_count']);
+      });
+
+      it('gets is_last_page=' + item['is_last_page'] + ' from page ' + item['page'], function(){
+        var isLastPage = getpage.getIsLastPageFromPage(html);
+        assert.equal(isLastPage, item['is_last_page']);
       });
     });
 
   });
-
-  // describe('isLastPage', function(){
-  //   it('returns False if additional pages remain', function(){
-  //     assert.equal(false);
-  //   });
-  //   it('returns True if no pages remain', function(){
-  //     assert.equal(false);
-  //   });
-  // });
 
 });

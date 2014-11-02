@@ -24,7 +24,7 @@ var sys = require('sys');
 
 // var priceRegex = "^\d+(.\d{1,2})?";
 
-var getItemsFromPage = function getItemsFromPage(rawHtml) {
+var getItemsFromPage = function(rawHtml) {
   try {
     var items = _parsePage(rawHtml)['items'];
     return items;
@@ -33,13 +33,30 @@ var getItemsFromPage = function getItemsFromPage(rawHtml) {
   }
 }
 
-var getPagingFromPage = function getItemsFromPage(rawHtml) {
+var getPagingFromPage = function(rawHtml) {
   try {
     var paging = _parsePage(rawHtml)['paging'];
-    return paging;
+    var morePages = (paging.indexOf('Next') > -1)
+    var total = 1;
+    if (morePages) {
+      // Hacky: all we care about is if this is last page
+      total += 1;
+    }
+    return {
+      "current": 1,
+      "total": total,
+    }
   } catch (e) {
-    return [];
+    return null;
   }
+}
+
+var getIsLastPageFromPage = function(rawHtml) {
+  paging = getPagingFromPage(rawHtml);
+  if (paging === null) {
+    return true;
+  }
+  return paging['current'] == paging['total'];
 }
 
 var _parsePage = function(rawHtml) {
@@ -48,12 +65,12 @@ var _parsePage = function(rawHtml) {
   var rawHtml = String(rawHtml);
   var firstIndex = rawHtml.indexOf(goButtonHtml);
   if (firstIndex === -1) {
-    return [];
+    throw "Failed to find first Go input button";
   }
   var restOfRawHtml = rawHtml.substr(firstIndex + goButtonHtml.length);
   var secondIndex = restOfRawHtml.indexOf(goButtonHtml);
   if (secondIndex === -1) {
-    return [];
+    throw "Failed to find second Go input button";
   }
   var itemsHtml = restOfRawHtml.substr(0, secondIndex);
 
@@ -63,8 +80,10 @@ var _parsePage = function(rawHtml) {
   var itemsHtml = itemsHtml.substr(0, itemsHtml.indexOf('<form action='));
   // Items are separated by double line breaks
   var itemLinks = itemsHtml.split('<br /><br />');
+
   // Last item in the '<a href' format is "paging" (1 of 2 pages, Next)
   var pagingLinks = itemLinks.pop();
+  // TODO: Parse pagingLinks into current/total pages
 
   return {
     'items' : itemLinks,
@@ -158,6 +177,6 @@ module.exports = {
   "getURLFromLink" : getURLFromLink,
   "getPrimeStatusFromLink" : getPrimeStatusFromLink,
   "getItemsFromPage" : getItemsFromPage,
+  "getPagingFromPage" : getPagingFromPage,
+  "getIsLastPageFromPage" : getIsLastPageFromPage,
 }
-
-
