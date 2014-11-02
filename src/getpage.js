@@ -46,7 +46,8 @@ var getPriceFromLink = function getPriceFromLink(link) {
   var dom = parseLink(link);
   for (i = 0; i < dom.length; i++) {
     if (dom[i].type == 'text' && dom[i].raw[0] == "$") {
-      return dom[i].raw.substr(0,dom[i].raw.length - 5)
+      var text = dom[i].raw;
+      return text.substr(1,(text.indexOf('&')-1))
     }
   }
   // TODO: Handle no price found
@@ -72,9 +73,40 @@ var getNameFromLink = function getNameFromLink(link) {
   }
 }
 
+
+var getURLFromLink = function getURLFromLink(link) {
+  var dom = parseLink(link);
+  for (i = 0; i < dom.length; i++) {
+      if (dom[i].type == 'tag' && dom[i].name == 'a') {
+        return dom[i].attribs['href']
+      }
+  }
+
+}
+
+var getPrimeStatusFromLink = function getPrimeStatusFromLink(link) {
+  var dom = parseLink(link);
+
+  try {
+    for (i = 0; i < dom.length; i++) {
+        if (dom[i].type == 'tag' && dom[i].name == 'img' && dom[i]['attribs']['alt'] == 'Prime') {
+          return true
+        }
+    }
+    return false
+  }
+
+  catch(e){
+    console.log('what?', e, dom)
+    return false
+  }
+}
+
 module.exports = {
   "getPriceFromLink" : getPriceFromLink,
-  "getNameFromLink" : getNameFromLink
+  "getNameFromLink" : getNameFromLink,
+  "getURLFromLink" : getURLFromLink,
+  "getPrimeStatusFromLink" : getPrimeStatusFromLink
 
 }
 

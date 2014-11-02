@@ -7,53 +7,74 @@
 var list_o_dict_o_links = [
     {
         'link': '<a href="/gp/aw/d/B007FQNLOY/ref=aw_d_var_2nd_pc_img?vs=1">1 TB - Red</a><br />$89.99&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" /><br /><br />',
+        'url':'/gp/aw/d/B007FQNLOY/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'1 TB - Red',
-        'price':'89.99'
+        'price':'89.99',
+        'prime_status':true
     },
     {
         'link': '<a href="/gp/aw/d/B007FQNLR6/ref=aw_d_var_2nd_pc_img?vs=1">1 TB - Silver</a><br />$69.99&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" /><br /><br />',
+        'url':'/gp/aw/d/B007FQNLR6/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'1 TB - Silver',
-        'price':'69.99'
+        'price':'69.99',
+        'prime_status':true
     },
     {
         'link': '<a href="/gp/aw/d/B006Y5UV4A/ref=aw_d_var_2nd_pc_img?vs=1">1 TB - Black</a><br />$67.03&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" /><br /><br />',
+        'url':'/gp/aw/d/B006Y5UV4A/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'1 TB - Black',
-        'price':'67.03'
+        'price':'67.03',
+        'prime_status':true
     },
     {
         'link': '<a href="/gp/aw/d/B007FQNKRC/ref=aw_d_var_2nd_pc_img?vs=1">1 TB - Blue</a><br />$164.00&nbsp;<br /><br />',
+        'url':'/gp/aw/d/B007FQNKRC/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'1 TB - Blue',
-        'price':'164.00'
+        'price':'164.00',
+        'prime_status':false
     },
     {
         'link': '<a href="/gp/aw/d/B006Y5UV3G/ref=aw_d_var_2nd_pc_img?vs=1">1.5 TB - Black</a><br />$88.99&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" /><br /><br />',
+        'url':'/gp/aw/d/B006Y5UV3G/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'1.5 TB - Black',
-        'price':'88.99'
+        'price':'88.99',
+        'prime_status':true
     },
     {
         'link': '<a href="/gp/aw/d/B009ZEAUJI/ref=aw_d_var_2nd_pc_img?vs=1">2 TB - Red</a><br />&nbsp;<br /><br />',
+        'url':'/gp/aw/d/B009ZEAUJI/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'2 TB - Red',
-        'price':''
+        'price':'?',
+        'prime_status':false
     },
     {
         'link': '<a href="/gp/aw/d/B008S4TGDM/ref=aw_d_var_2nd_pc_img?vs=1">2 TB - Silver</a><br />$168.50&nbsp;<br /><br />',
+        'url':'/gp/aw/d/B008S4TGDM/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'2 TB - Silver',
-        'price':'168.50'
+        'price':'168.50',
+        'prime_status':false
     },
     {
         'link': '<a href="/gp/aw/d/B009ZEATVM/ref=aw_d_var_2nd_pc_img?vs=1">2 TB - Blue</a><br />&nbsp;<br /><br />',
+        'url':'/gp/aw/d/B009ZEATVM/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'2 TB - Blue',
-        'price':''
+        'price':'?',
+        'prime_status':false
     },
     {
         'link': '<a href="/gp/aw/d/B005HMKKH4/ref=aw_d_var_2nd_pc_img?vs=1">2 TB - Black</a><br />$129.99&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" /><br /><br />',
+        'url':'/gp/aw/d/B005HMKKH4/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'2 TB - Black',
-        'price':'129.99'
+        'price':'129.99',
+        'prime_status':true
     },
     {
         'link': '<a href="/gp/aw/d/B006Y5UV4U/ref=aw_d_var_2nd_pc_img?vs=1">500 GB - Black</a><br />$88.11&nbsp;<br /><br />',
+        'url':'/gp/aw/d/B006Y5UV4U/ref=aw_d_var_2nd_pc_img?vs=1',
         'name':'500 GB - Black',
-        'price':'88.11'}
+        'price':'88.11',
+        'prime_status':false
+    }
 ];
 
 
@@ -68,38 +89,58 @@ describe('get page', function(){
       it('return a dollar value if a price exists for ' + item['name'], function(){
         var link = item['link'];
         var price = getpage.getPriceFromLink(link);
-        assert(price, item['price']);
+        assert.equal(price, item['price']);
       });
+
+      it("return prime status for item" + item['name'], function(){
+        var link = item['link']
+        var primeStatus = getpage.getPrimeStatusFromLink(link);
+        assert.equal(primeStatus, item['prime_status']);
+      });
+
+      it("return url for item" + item['name'] , function(){
+        var link = item['link'];
+        var url = getpage.getURLFromLink(link);
+        assert.equal(url, item['url']);
+      });
+
+      it('return a name of the item' + item['name'], function(){
+        var link = item['link'];
+        var name = getpage.getNameFromLink(link);
+        assert.equal(name, item['name']);
+      });
+
     });
   });
 
-  it('return a name of the item', function(){
-    var link = '<a href="/gp/aw/d/B007FQNLOY/ref=aw_d_var_2nd_pc_img?vs=1">1 TB - Red</a><br />$99.99&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" />'
-    var name = getpage.getNameFromLink(link);
-    assert(name, '1 TB - Red');
-  });
+ 
 
   it("return ? if the name of the item cannot be found", function(){
     var link = '<a href="/gp/aw/d/B007FQNLOY/ref=aw_d_var_2nd_pc_img?vs=1"></a><br />$99.99&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" />'
     var name = getpage.getNameFromLink(link);
-    assert(name, '?');
+    assert.equal(name, '?');
   });
+
+
+
+
+ 
 
   // describe('getItemsFromPage', function(){
   //   it('returns the dom for a page', function(){
-  //     assert(false);
+  //     assert.equal(false);
   //   });
   //   it('does something the dom for a page', function(){
-  //     assert(false);
+  //     assert.equal(false);
   //   });
   // });
 
   // describe('isLastPage', function(){
   //   it('returns False if additional pages remain', function(){
-  //     assert(false);
+  //     assert.equal(false);
   //   });
   //   it('returns True if no pages remain', function(){
-  //     assert(false);
+  //     assert.equal(false);
   //   });
   // });
 
