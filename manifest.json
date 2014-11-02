@@ -2,8 +2,8 @@
   "name": "Amazoptions",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "See all the prices at once.",
-  "homepage_url": "https://github.com/nathanleiby/amazoptions",
+  "description": "Compare prices on amazon",
+  "homepage_url": "https://www.github.com/nathanleiby/amazoptions",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -14,28 +14,17 @@
     "page": "src/bg/background.html",
     "persistent": true
   },
-  "options_page": "src/options/index.html",
-  "page_action": {
+  "browser_action": {
     "default_icon": "icons/icon19.png",
-    "default_title": "page action demo",
-    "default_popup": "src/page_action/page_action.html"
+    "default_title": "browser action demo",
+    "default_popup": "src/browser_action/browser_action.html"
   },
-  "permissions": [
-    "tabs",
-    "http://www.amazon.com/*/dp/*/*",
-    "http://www.amazon.com/*/product/*"
-  ],
   "content_scripts": [
     {
       "matches": [
-        "http://www.amazon.com/*/dp/*",
-        "http://www.amazon.com/*/product/*"
-      ],
-      "css": [
-        "src/inject/inject.css"
+        "https://www.google.com/*"
       ],
       "js": [
-        "js/jquery/jquery.js",
         "src/inject/inject.js"
       ]
     }
