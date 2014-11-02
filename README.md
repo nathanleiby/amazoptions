@@ -64,3 +64,4 @@ chrome.tabs.query({active:true,currentWindow:true},funciton(tabs){
 Created with the awesome [extensionizr](http://extensionizr.com).
 
 CSS from: http://coding.smashingmagazine.com/2008/08/13/top-10-css-table-designs
+Nick added this line to test git connection
