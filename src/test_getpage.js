@@ -2,7 +2,8 @@
 // 1 <a href="/gp/aw/d/B006Y5UV4A/ref=aw_d_var_pri_pc_g_2_1?p=2&vid=ALL">2</a>
 // <a href="/gp/aw/d/B006Y5UV4A/ref=aw_d_var_pri_pc_n_1?p=2&vid=ALL">Next</a>'
 
-
+fs = require('fs');
+util = require('util');
 
 var list_o_dict_o_links = [
     {
@@ -77,11 +78,9 @@ var list_o_dict_o_links = [
     }
 ];
 
-
 var assert = require('assert');
 var getpage = require('./getpage');
 var htmlparser = require("htmlparser");
-
 
 describe('get page', function(){
   describe('parseItem', function() {
@@ -113,27 +112,39 @@ describe('get page', function(){
     });
   });
 
- 
-
   it("return ? if the name of the item cannot be found", function(){
     var link = '<a href="/gp/aw/d/B007FQNLOY/ref=aw_d_var_2nd_pc_img?vs=1"></a><br />$99.99&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" />'
     var name = getpage.getNameFromLink(link);
     assert.equal(name, '?');
   });
 
+  describe('getItemsFromPage', function(){
+    it('returns the dom for a page', function(){
+      var html = fs.readFileSync('src/product1-p1.html');
+      var dom = getpage.getItemsFromPage(html);
+      assert(dom);
+    });
 
+    var pages = [
+      {
+        'page':'src/product1-p1.html',
+        'expected_item_count': 10
+      },
+      {
+        'page':'src/product1-p2.html',
+        'expected_item_count': 5
+      }
+    ];
 
+    pages.forEach(function(item) {
+      it('gets ' + item['expected_item_count'] + ' items from page ' + item['page'], function(){
+        var html = fs.readFileSync('src/product1-p1.html');
+        var items = getpage.getItemsFromPage(html.toString());
+        assert(items.length, item['expected_item_count']);
+      });
+    });
 
- 
-
-  // describe('getItemsFromPage', function(){
-  //   it('returns the dom for a page', function(){
-  //     assert.equal(false);
-  //   });
-  //   it('does something the dom for a page', function(){
-  //     assert.equal(false);
-  //   });
-  // });
+  });
 
   // describe('isLastPage', function(){
   //   it('returns False if additional pages remain', function(){

@@ -2,6 +2,8 @@
 // var quest = require('quest');
 
 // var listing_page = "http://www.amazon.com/gp/aw/d/B006Y5UV4A/ref=aw_d_v_pc?vid=ALL"
+  // http://www.amazon.com/gp/aw/ol/B009ZEAUJI/ref=mw_dp_olp?o=New&op=1&vs=1 <-- this product is 2TB red HD
+  // it has no price listed on the main page but does have prices from 3rd party sellers
 // var options = {
 //   "uri": listing_page,
 //   "method": "GET"
@@ -22,9 +24,57 @@ var sys = require('sys');
 
 // var priceRegex = "^\d+(.\d{1,2})?";
 
+var getItemsFromPage = function getItemsFromPage(rawHtml) {
+  try {
+    var items = _parsePage(rawHtml)['items'];
+    return items;
+  } catch (e) {
+    return [];
+  }
+}
+
+var getPagingFromPage = function getItemsFromPage(rawHtml) {
+  try {
+    var paging = _parsePage(rawHtml)['paging'];
+    return paging;
+  } catch (e) {
+    return [];
+  }
+}
+
+var _parsePage = function(rawHtml) {
+  // find all HTML written between the first and second 'go' buttons
+  var goButtonHtml = '<input type="submit" value="Go" />';
+  var rawHtml = String(rawHtml);
+  var firstIndex = rawHtml.indexOf(goButtonHtml);
+  if (firstIndex === -1) {
+    return [];
+  }
+  var restOfRawHtml = rawHtml.substr(firstIndex + goButtonHtml.length);
+  var secondIndex = restOfRawHtml.indexOf(goButtonHtml);
+  if (secondIndex === -1) {
+    return [];
+  }
+  var itemsHtml = restOfRawHtml.substr(0, secondIndex);
+
+  // Remove characters before the first item link
+  var itemsHtml = itemsHtml.substr(itemsHtml.indexOf('<a href'));
+  // Remove things after the links
+  var itemsHtml = itemsHtml.substr(0, itemsHtml.indexOf('<form action='));
+  // Items are separated by double line breaks
+  var itemLinks = itemsHtml.split('<br /><br />');
+  // Last item in the '<a href' format is "paging" (1 of 2 pages, Next)
+  var pagingLinks = itemLinks.pop();
+
+  return {
+    'items' : itemLinks,
+    'paging' : pagingLinks
+  };
+}
+
 var parseLink = function parseLink(link){
   var rawHtml = link;
-  
+
   var handler = new htmlparser.DefaultHandler(function (error, dom) {
     if (error) {
       console.log("error");
@@ -42,7 +92,7 @@ var parseLink = function parseLink(link){
 
 
 var getPriceFromLink = function getPriceFromLink(link) {
-  
+
   var dom = parseLink(link);
   for (i = 0; i < dom.length; i++) {
     if (dom[i].type == 'text' && dom[i].raw[0] == "$") {
@@ -106,8 +156,8 @@ module.exports = {
   "getPriceFromLink" : getPriceFromLink,
   "getNameFromLink" : getNameFromLink,
   "getURLFromLink" : getURLFromLink,
-  "getPrimeStatusFromLink" : getPrimeStatusFromLink
-
+  "getPrimeStatusFromLink" : getPrimeStatusFromLink,
+  "getItemsFromPage" : getItemsFromPage,
 }
 
 
