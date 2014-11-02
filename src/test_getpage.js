@@ -63,27 +63,44 @@ var htmlparser = require("htmlparser");
 
 
 describe('get page', function(){
+  describe('parseItem', function() {
     list_o_dict_o_links.forEach(function(item) {
-
       it('return a dollar value if a price exists for ' + item['name'], function(){
-            var link = item['link'];
-            var price = getpage.getPriceFromLink(link);
-            assert(price, item['price']);
-        
-            })
-    })
+        var link = item['link'];
+        var price = getpage.getPriceFromLink(link);
+        assert(price, item['price']);
+      });
+    });
+  });
 
   it('return a name of the item', function(){
     var link = '<a href="/gp/aw/d/B007FQNLOY/ref=aw_d_var_2nd_pc_img?vs=1">1 TB - Red</a><br />$99.99&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" />'
     var name = getpage.getNameFromLink(link);
     assert(name, '1 TB - Red');
-  })
+  });
 
   it("return ? if the name of the item cannot be found", function(){
     var link = '<a href="/gp/aw/d/B007FQNLOY/ref=aw_d_var_2nd_pc_img?vs=1"></a><br />$99.99&nbsp;<img src="http://g-ecx.images-amazon.com/images/G/01/anywhere/smart/prime_badge._V192208257_.gif" width="45" alt="Prime" extraStyle="vertical-align:text-top;" height="17" border="0" />'
     var name = getpage.getNameFromLink(link);
     assert(name, '?');
-  })
+  });
 
+  // describe('getItemsFromPage', function(){
+  //   it('returns the dom for a page', function(){
+  //     assert(false);
+  //   });
+  //   it('does something the dom for a page', function(){
+  //     assert(false);
+  //   });
+  // });
 
-})
+  // describe('isLastPage', function(){
+  //   it('returns False if additional pages remain', function(){
+  //     assert(false);
+  //   });
+  //   it('returns True if no pages remain', function(){
+  //     assert(false);
+  //   });
+  // });
+
+});
