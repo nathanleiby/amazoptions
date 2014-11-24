@@ -81,8 +81,19 @@ var list_o_dict_o_links = [
 var assert = require('assert');
 var getpage = require('./getpage');
 var htmlparser = require("htmlparser");
+var assert = require("assert")
 
 describe('get page', function(){
+  describe('fetchHTMLGivenURL', function(){
+    it('returns the html for a provided link', function(done){
+      var HTML = getpage.fetchHTMLGivenURL('http://www.amazon.com', function(html){
+        console.log('in test callback printing body', html);
+        assert.notEqual(html, null);
+        done();
+      })
+    })
+  });
+
   describe('parseItem', function() {
     list_o_dict_o_links.forEach(function(item) {
       it('return a dollar value if a price exists for ' + item['name'], function(){

@@ -20,6 +20,7 @@
 // quest(options, quest_callback);
 
 var htmlparser = require('htmlparser');
+var quest = require('quest')
 var sys = require('sys');
 
 // var priceRegex = "^\d+(.\d{1,2})?";
@@ -58,6 +59,7 @@ var getIsLastPageFromPage = function(rawHtml) {
   }
   return paging['current'] == paging['total'];
 }
+
 
 var _parsePage = function(rawHtml) {
   // find all HTML written between the first and second 'go' buttons
@@ -143,6 +145,31 @@ var getNameFromLink = function getNameFromLink(link) {
 }
 
 
+
+var fetchHTMLGivenURL = function fetchHTMLGivenURL(url, callback){
+  var options = {
+    "uri": url,
+    "method": "GET"
+  }
+
+  var quest_callback = function(err, response, body) {
+    console.log ("in the callback before logic");
+    if (! err && response.statusCode === 200) {
+      console.log('in quest callback printing body', body);
+      return callback(body);
+    }
+    else {
+      console.log('in error logic', err, response);
+      return callback(null);
+    }
+  }
+
+  quest(options, quest_callback);
+}
+
+
+
+
 var getURLFromLink = function getURLFromLink(link) {
   var dom = parseLink(link);
   for (i = 0; i < dom.length; i++) {
@@ -172,6 +199,7 @@ var getPrimeStatusFromLink = function getPrimeStatusFromLink(link) {
 }
 
 module.exports = {
+  "fetchHTMLGivenURL" : fetchHTMLGivenURL,
   "getPriceFromLink" : getPriceFromLink,
   "getNameFromLink" : getNameFromLink,
   "getURLFromLink" : getURLFromLink,
